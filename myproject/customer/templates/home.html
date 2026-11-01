@@ -1,0 +1,654 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeCard | Credit Card Fraud Detection</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #101a35;
+            --blue: #3563e9;
+            --light-blue: #edf3ff;
+            --text: #536078;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--navy);
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: auto;
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+        .nav-button {
+            background: var(--blue);
+            color: white !important;
+            padding: 11px 20px;
+            border-radius: 8px;
+        }
+
+        .hero {
+            background:
+                radial-gradient(circle at 85% 20%, #dce7ff 0, transparent 32%),
+                linear-gradient(120deg, #f7f9ff, #eef3ff);
+            padding: 75px 25px 85px;
+        }
+
+        .hero-content {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 30px;
+            background: #e0eaff;
+            color: #2855cb;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            font-size: clamp(38px, 5vw, 60px);
+            line-height: 1.12;
+            letter-spacing: -2px;
+            margin-bottom: 22px;
+        }
+
+        h1 span {
+            color: var(--blue);
+        }
+
+        .hero-text {
+            max-width: 530px;
+            color: var(--text);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 23px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: white;
+            box-shadow: 0 8px 20px #3563e933;
+        }
+
+        .btn-primary:hover {
+            background: #234fd1;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid #d2d9e8;
+            color: var(--navy);
+            background: white;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--blue);
+        }
+
+        .hero-note {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #68758c;
+        }
+
+        .visual {
+            position: relative;
+            min-height: 365px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bank-card {
+            width: 330px;
+            max-width: 100%;
+            min-height: 205px;
+            border-radius: 22px;
+            padding: 26px;
+            color: white;
+            background: linear-gradient(135deg, #14244c, #3563e9);
+            box-shadow: 0 25px 55px #14244c40;
+            transform: rotate(-5deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bank-card::before {
+            content: "";
+            position: absolute;
+            width: 210px;
+            height: 210px;
+            border: 1px solid #ffffff30;
+            border-radius: 50%;
+            right: -60px;
+            top: -80px;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .chip {
+            width: 38px;
+            height: 29px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #e9d8a6, #bca66e);
+            margin-top: 30px;
+        }
+
+        .card-number {
+            letter-spacing: 3px;
+            margin-top: 17px;
+            font-size: 16px;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            font-size: 11px;
+            color: #dce5ff;
+        }
+
+        .status-card {
+            position: absolute;
+            right: 0;
+            bottom: 24px;
+            background: white;
+            padding: 17px 20px;
+            border-radius: 14px;
+            box-shadow: 0 12px 35px #17234c18;
+            min-width: 220px;
+        }
+
+        .status-heading {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .status-line {
+            color: #188b60;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            display: inline-block;
+            height: 8px;
+            width: 8px;
+            background: #20b47b;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .section {
+            padding: 80px 25px;
+        }
+
+        .section-inner {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 45px;
+        }
+
+        .section-heading h2 {
+            font-size: 34px;
+            line-height: 1.25;
+            margin-bottom: 15px;
+        }
+
+        .section-heading p {
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature {
+            border: 1px solid #e7ebf3;
+            padding: 30px;
+            border-radius: 16px;
+            background: white;
+            transition: 0.25s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px #1a2b5010;
+        }
+
+        .feature-icon {
+            height: 52px;
+            width: 52px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+            background: var(--light-blue);
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        .how-section {
+            background: #f7f9fd;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            color: white;
+            background: var(--blue);
+            font-weight: 800;
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .step p {
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        .cta {
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 22px;
+            padding: 48px 25px;
+            background: linear-gradient(120deg, #14244c, #3563e9);
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 31px;
+            margin-bottom: 12px;
+        }
+
+        .cta p {
+            color: #dce5ff;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--blue);
+        }
+
+        footer {
+            padding: 30px 25px;
+            border-top: 1px solid #edf0f5;
+            color: #68758c;
+            font-size: 12px;
+        }
+
+        .footer-inner {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 800px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .visual {
+                min-height: 330px;
+            }
+
+            .features,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a:not(.nav-button) {
+                display: none;
+            }
+
+            .section-heading h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .hero {
+                padding-top: 50px;
+            }
+
+            .bank-card {
+                width: 290px;
+            }
+
+            .status-card {
+                right: -5px;
+                bottom: 0;
+            }
+
+            .cta h2 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="logo">Safe<span>Card.</span></a>
+
+        <nav class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="{% url 'login' %}">Sign In</a>
+            <a href="{% url 'register' %}" class="nav-button">Get Started</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+
+            <div>
+                <div class="eyebrow">SMARTER TRANSACTION MONITORING</div>
+
+                <h1>
+                    Protect Every<br>
+                    Transaction with<br>
+                    <span>Intelligent Detection.</span>
+                </h1>
+
+                <p class="hero-text">
+                    SafeCard is a credit card fraud detection project designed
+                    to analyse transaction data and help identify potentially
+                    suspicious activity using data analysis and machine learning.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="{% url 'register' %}" class="btn btn-primary">
+                        Get Started &rarr;
+                    </a>
+
+                    <a href="#how-it-works" class="btn btn-outline">
+                        Explore the System
+                    </a>
+                </div>
+
+                <p class="hero-note">
+                    A student project demonstrating machine-learning-based
+                    transaction classification.
+                </p>
+            </div>
+
+            <!-- Illustrative card -->
+            <div class="visual">
+                <div class="bank-card">
+                    <div class="card-top">
+                        <span>SafeCard</span>
+                        <span>VISA</span>
+                    </div>
+
+                    <div class="chip"></div>
+
+                    <div class="card-number">
+                        •••• &nbsp; •••• &nbsp; •••• &nbsp; 4829
+                    </div>
+
+                    <div class="card-bottom">
+                        <span>DEMO CARD</span>
+                        <span>SECURE PAYMENTS</span>
+                    </div>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-heading">Transaction Monitoring</div>
+                    <div class="status-line">
+                        <span class="status-dot"></span>
+                        Monitoring interface preview
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+        <div class="section-inner">
+
+            <div class="section-heading">
+                <h2>Designed for Smarter Fraud Detection</h2>
+                <p>
+                    Explore the main capabilities planned for the SafeCard
+                    credit card fraud detection system.
+                </p>
+            </div>
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Transaction Analysis</h3>
+                    <p>
+                        Examine transaction data and identify patterns that
+                        may indicate unusual or suspicious activity.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Machine Learning</h3>
+                    <p>
+                        Integrate a trained machine learning model to classify
+                        transactions as potentially fraudulent or legitimate.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Visual Dashboard</h3>
+                    <p>
+                        Present transaction summaries and detection results
+                        through a clear, easy-to-understand dashboard.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section how-section" id="how-it-works">
+        <div class="section-inner">
+
+            <div class="section-heading">
+                <h2>How SafeCard Works</h2>
+                <p>
+                    A simple workflow for demonstrating transaction
+                    classification in your project.
+                </p>
+            </div>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Enter Transaction Data</h3>
+                    <p>
+                        Provide the required transaction details or select
+                        a supported sample transaction.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Analyse the Transaction</h3>
+                    <p>
+                        The backend processes the input and passes the required
+                        features to the trained model.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>View the Result</h3>
+                    <p>
+                        Display the model's prediction and relevant transaction
+                        information on the dashboard.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="cta">
+                <h2>Explore Smarter Transaction Security</h2>
+                <p>
+                    Create an account to explore the SafeCard demonstration
+                    system and its dashboard.
+                </p>
+                <a href="{% url 'register' %}" class="btn">
+                    Create Your Account &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div>© 2026 SafeCard. Academic project demonstration.</div>
+            <div>Credit Card Fraud Detection System | Django & Python</div>
+        </div>
+    </footer>
+
+</body>
+</html>

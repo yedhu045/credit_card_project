@@ -1,0 +1,418 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeCard | Secure Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            background:
+                linear-gradient(120deg,
+                    rgba(4, 18, 43, 0.90),
+                    rgba(5, 65, 92, 0.55)),
+                url("https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1920&q=85");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1050px;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .brand {
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #00c9a7;
+            border-radius: 15px;
+            font-size: 27px;
+            font-weight: 700;
+            color: #062a3b;
+        }
+
+        .logo h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand h1 {
+            font-size: clamp(32px, 4vw, 49px);
+            line-height: 1.25;
+            margin-bottom: 22px;
+        }
+
+        .brand h1 span {
+            color: #00e0b5;
+        }
+
+        .brand p {
+            color: #d4e2f0;
+            font-size: 15px;
+            line-height: 1.9;
+            max-width: 470px;
+        }
+
+        .features {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #f0f7ff;
+            font-size: 14px;
+        }
+
+        .check {
+            color: #00e0b5;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 38px 32px;
+            border-radius: 22px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+            width: 100%;
+        }
+
+        .card-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card-heading h2 {
+            color: #102c49;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .card-heading p {
+            color: #758397;
+            font-size: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #243b53;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #dbe3ed;
+            border-radius: 10px;
+            outline: none;
+            font-family: inherit;
+            font-size: 13px;
+            background: #f8fafc;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #00a88f;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.12);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0 23px;
+            font-size: 12px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #627287;
+        }
+
+        .remember input {
+            accent-color: #009f88;
+        }
+
+        .options a,
+        .register a {
+            color: #008d7b;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #00b99b, #007e88);
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 22px rgba(0, 153, 133, 0.25);
+        }
+
+        .messages {
+            margin-bottom: 18px;
+        }
+
+        .message {
+            padding: 11px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            background: #eaf8f2;
+            color: #176548;
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .security {
+            text-align: center;
+            color: #a1adba;
+            font-size: 11px;
+            margin-top: 25px;
+        }
+
+        .security span {
+            color: #009b83;
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                max-width: 440px;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .brand {
+                text-align: center;
+            }
+
+            .logo {
+                justify-content: center;
+                margin-bottom: 18px;
+            }
+
+            .brand h1 {
+                font-size: 30px;
+            }
+
+            .brand p {
+                margin: auto;
+                font-size: 13px;
+            }
+
+            .features {
+                display: none;
+            }
+
+            .login-card {
+                padding: 30px 24px;
+            }
+        }
+    </style>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <section class="brand">
+        <div class="logo">
+            <div class="logo-icon">S</div>
+            <h2>SafeCard</h2>
+        </div>
+
+        <h1>Your money.<br>
+            Your security.<br>
+            <span>Our priority.</span>
+        </h1>
+
+        <p>
+            Welcome to SafeCard, a smart credit card fraud detection
+            platform designed to help monitor transactions and identify
+            potentially suspicious activity.
+        </p>
+
+        <div class="features">
+            <div class="feature">
+                <span class="check">✓</span>
+                Secure customer login
+            </div>
+            <div class="feature">
+                <span class="check">✓</span>
+                Smart transaction monitoring
+            </div>
+            <div class="feature">
+                <span class="check">✓</span>
+                Fraud detection support
+            </div>
+        </div>
+    </section>
+
+    <section class="login-card">
+
+        <div class="card-heading">
+            <h2>Welcome Back!</h2>
+            <p>Sign in to access your SafeCard account</p>
+        </div>
+         
+      
+<!-- Load SweetAlert2 first -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            Swal.fire({
+                title: "{% if message.tags == 'success' %}Registration Successful!{% else %}Notice{% endif %}",
+                text: "{{ message|escapejs }}",
+                icon: "{% if message.tags == 'success' %}success{% else %}error{% endif %}",
+                confirmButtonText: "OK"
+            });
+        </script>
+    {% endfor %}
+{% endif %}
+
+        
+
+
+       
+
+
+
+        <!-- {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="message">
+            Invalid username or password. Please try again.
+        </div>
+        {% endif %} -->
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username">Email/Admin Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="email"
+                    placeholder="Enter email or admin username"
+                    autocomplete="username"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required>
+            </div>
+
+            <div class="options">
+                <label class="remember">
+                    <input type="checkbox" name="remember_me">
+                    Remember me
+                </label>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Sign In Securely →
+            </button>
+        </form>
+
+        <div class="register">
+            Don't have an account?
+            <a href="{% url 'register' %}">Create Account</a>
+        </div>
+
+        <div class="security">
+            <span>🔒</span> Protected login · SafeCard Security
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>

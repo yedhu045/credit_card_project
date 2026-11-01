@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | SecurePay</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 16px;
+            background: #f1f6ff;
+            color: #172b4d;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1100px;
+            min-height: 640px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 70px rgba(34, 70, 130, 0.12);
+        }
+
+        /* LEFT SIDE */
+
+        .hero {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 42px;
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(12, 35, 77, 0.30),
+                    rgba(12, 35, 77, 0.91)
+                ),
+                url("https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: #ffffff;
+            color: #2463eb;
+            font-size: 23px;
+        }
+
+        .hero-content {
+            max-width: 390px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 9px 13px;
+            border: 1px solid rgba(255,255,255,.4);
+            background: rgba(255,255,255,.13);
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 3.3vw, 43px);
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+        }
+
+        .hero-content p {
+            color: #e2ebff;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: #e4ecff;
+        }
+
+        .shield {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,.15);
+            font-size: 20px;
+        }
+
+        /* RIGHT SIDE */
+
+        .form-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 45px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .welcome {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: #2563eb;
+            margin-bottom: 12px;
+        }
+
+        .form-container h2 {
+            font-size: 30px;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #77849a;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #344563;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            height: 49px;
+            border: 1px solid #dfe6f1;
+            border-radius: 10px;
+            background: #fbfcff;
+            padding: 0 15px;
+            font-family: inherit;
+            font-size: 13px;
+            color: #172b4d;
+            outline: none;
+            transition: .2s ease;
+        }
+
+        .input-wrap input:focus {
+            border-color: #3b73ed;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(59, 115, 237, .10);
+        }
+
+        .input-wrap input::placeholder {
+            color: #a4afc0;
+        }
+
+        .password-input {
+            padding-right: 65px !important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .strength {
+            height: 4px;
+            border-radius: 5px;
+            background: #e8edf5;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            background: #ef4444;
+            transition: .25s;
+        }
+
+        .strength-text {
+            margin-top: 7px;
+            font-size: 10px;
+            color: #8793a6;
+        }
+
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin: 4px 0 22px;
+            color: #748198;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .terms input {
+            margin-top: 4px;
+            accent-color: #2563eb;
+        }
+
+        .terms a,
+        .login a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(110deg, #2563eb, #4f83f1);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 7px 18px rgba(37, 99, 235, .22);
+            transition: .2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(37, 99, 235, .3);
+        }
+
+        .login {
+            text-align: center;
+            font-size: 12px;
+            color: #78869c;
+            margin-top: 23px;
+        }
+
+        .footer {
+            margin-top: 36px;
+            padding-top: 19px;
+            border-top: 1px solid #edf0f6;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            color: #97a2b3;
+            font-size: 10px;
+        }
+
+        .footer span {
+            color: #168b65;
+            font-weight: 700;
+        }
+
+        @media (max-width: 800px) {
+            .page {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .hero {
+                min-height: 290px;
+                padding: 28px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero-content p {
+                font-size: 12px;
+            }
+
+            .security-note {
+                margin-top: 25px;
+            }
+
+            .form-section {
+                padding: 35px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="page">
+
+        <!-- LEFT: SECURITY BACKGROUND -->
+        <section class="hero">
+
+            <div class="brand">
+                <div class="brand-icon">◈</div>
+                <span>SecurePay</span>
+            </div>
+
+            <div class="hero-content">
+                <span class="tag">SMARTER FINANCIAL SECURITY</span>
+
+                <h1>Your money.<br>
+                    Your security.<br>
+                    Our priority.</h1>
+
+                <p>
+                    Join our intelligent financial platform.
+                    Experience secure account access and
+                    smarter credit card transaction monitoring.
+                </p>
+            </div>
+
+            <div class="security-note">
+                <div class="shield">♢</div>
+                <div>
+                    <strong>Security starts here</strong><br>
+                    <span>Built with fraud awareness in mind</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- RIGHT: REGISTRATION FORM -->
+        <section class="form-section">
+
+            <div class="form-container">
+
+                <div class="welcome">GET STARTED</div>
+
+                <h2>Create account</h2>
+
+                <p class="subtitle">
+                    Create your account to access your
+                    financial security dashboard.
+                </p>
+
+               <form id="registerForm" method="POST" action="{% url 'register' %}">                  
+                  {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="name">Full name</label>
+                        <div class="input-wrap">
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <div class="input-wrap">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+
+                        <div class="input-wrap">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="password-input"
+                                placeholder="Create a strong password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required>
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                id="togglePassword">
+                                Show
+                            </button>
+                        </div>
+
+                        <div class="strength">
+                            <div class="strength-bar"
+                                 id="strengthBar"></div>
+                        </div>
+
+                        <p class="strength-text" id="strengthText">
+                            Use at least 8 characters.
+                        </p>
+                    </div>
+
+                    <div class="terms">
+                        <input type="checkbox"
+                               id="terms"
+                               required>
+
+                        <label for="terms" style="margin:0;font-weight:400">
+                            I agree to the
+                            <a href="#terms">Terms of Service</a>
+                            and
+                            <a href="#privacy">Privacy Policy</a>.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Create Account &nbsp; →
+                    </button>
+
+                </form>
+
+                <div class="login">
+                    Already have an account?
+<a href="{% url 'login' %}">Sign In</a>
+
+                <div class="footer">
+                    <span>◆</span>
+                    SecurePay · Credit Card Fraud Detection
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+<script>
+    const password = document.getElementById("password");
+    const toggle = document.getElementById("togglePassword");
+    const strengthBar = document.getElementById("strengthBar");
+    const strengthText = document.getElementById("strengthText");
+
+    // Show or hide password
+    toggle.addEventListener("click", function () {
+        if (password.type === "password") {
+            password.type = "text";
+            toggle.textContent = "Hide";
+        } else {
+            password.type = "password";
+            toggle.textContent = "Show";
+        }
+    });
+
+    // Password strength indicator
+    password.addEventListener("input", function () {
+        const value = password.value;
+        let score = 0;
+
+        if (value.length >= 8) score++;
+        if (/[A-Z]/.test(value) && /[a-z]/.test(value)) score++;
+        if (/[0-9]/.test(value)) score++;
+        if (/[^A-Za-z0-9]/.test(value)) score++;
+
+        const levels = [
+            { width: "0%", color: "#e8edf5", text: "Use at least 8 characters." },
+            { width: "25%", color: "#ef4444", text: "Weak password" },
+            { width: "50%", color: "#f59e0b", text: "Fair password" },
+            { width: "75%", color: "#3b82f6", text: "Good password" },
+            { width: "100%", color: "#16a34a", text: "Strong password" }
+        ];
+
+        const level = value.length === 0
+            ? levels[0]
+            : levels[score];
+
+        strengthBar.style.width = level.width;
+        strengthBar.style.background = level.color;
+        strengthText.textContent = level.text;
+    });
+</script>
+
+
+</body>
+</html>
